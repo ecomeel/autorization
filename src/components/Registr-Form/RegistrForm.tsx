@@ -13,7 +13,6 @@ import "../Button/button.scss";
 import "./registr-form.scss";
 
 import { validation } from "../../hooks/useValidation.ts";
-// import Checkbox from "../Checkbox/Checkbox.tsx";
 
 export const RegistrForm: React.FC = () => {
     const [user, setUser] = useState({
@@ -28,48 +27,41 @@ export const RegistrForm: React.FC = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const handleSignUpClick = () => {
-        if (!validation(user)) {
-            console.log("Проверка пройдена");
-        } else {
-            console.log("Провал");
-        }
+    function handleSignUpClick() {
+        if (!validation(user)) return;
 
-        // createUserWithEmailAndPassword(auth, user.email, user.password).then(
-        //     (userCredential) => {
-        //         const auth = getAuth();
+        const auth = getAuth();
+        createUserWithEmailAndPassword(auth, user.email, user.password).then(
+            (userCredential) => {
+                // Signed up
+                const person = userCredential.user;
 
-        //         // Signed up
-        //         const person = userCredential.user;
-        //         // console.log(person)
-        //         // console.log(person.accessToken)
-        //         // dispatch(
-        //         //     loginUser({
-        //         //         id: person.uid,
-        //         //         name: user.name,
-        //         //         surname: user.surname,
-        //         //         email: user.email,
-        //         //         // token: person.accessToken,
-        //         //         phone: user.phone,
-        //         //     })
-        //         // );
+                dispatch(
+                    loginUser({
+                        id: person.uid,
+                        name: user.name,
+                        surname: user.surname,
+                        email: user.email,
+                        phone: user.phone,
+                    })
+                );
 
-        //         // addUserToDatabase({
-        //         //     id: person.uid,
-        //         //     name: user.name,
-        //         //     surname: user.surname,
-        //         //     email: user.email,
-        //         //     phone: user.phone,
-        //         // });
+                addUserToDatabase({
+                    id: person.uid,
+                    name: user.name,
+                    surname: user.surname,
+                    email: user.email,
+                    phone: user.phone,
+                });
 
-        //         navigate("/");
-        //     }
-        // );
+                navigate("/");
+            }
+        )
         // .catch((error) => {
         //     const errorCode = error.code;
         //     const errorMessage = error.message;
         // });
-    };
+    }
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setUser({
@@ -77,8 +69,12 @@ export const RegistrForm: React.FC = () => {
             [e.target.name]: e.target.value,
         });
     };
-
-    // Почему не переключается чекбокс
+    function handleConfirm() {
+        setUser({
+            ...user,
+            isPassConfirm: !user.isPassConfirm,
+        });
+    }
 
     return (
         <div className="form">
@@ -142,8 +138,8 @@ export const RegistrForm: React.FC = () => {
                     className="checkbox__input"
                     type="checkbox"
                     name="isPassConfirm"
-                    // onClick={handleCheckboxChange}
-                    // checked={user.isPassConfirm}
+                    onChange={handleConfirm}
+                    checked={user.isPassConfirm}
                 />
                 <label htmlFor="regisPassConfirm" className="checkbox__label">
                     Подтверждаю пароль
@@ -152,7 +148,7 @@ export const RegistrForm: React.FC = () => {
             <button
                 className="button"
                 name="save-data"
-                onClick={handleSignUpClick}
+                onClick={() => handleSignUpClick()}
             >
                 Продолжить
             </button>

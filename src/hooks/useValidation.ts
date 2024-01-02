@@ -4,15 +4,7 @@ interface UserPasswords extends User {
     checkPassword: string;
     isPassConfirm: boolean;
 }
-interface ItfProps {
-    name: string | null;
-    surname: string | null;
-    phone: string | null;
-    email: string | null;
-    password: string;
-    checkPassword: string;
-    isPassConfirm: boolean;
-}
+
 export function areInputsEmpty(fields: UserPasswords): boolean {
     let isEmpty = false;
 
@@ -24,47 +16,39 @@ export function areInputsEmpty(fields: UserPasswords): boolean {
         const inputNode = document.getElementById(
             `reg${field}`
         ) as HTMLInputElement;
-        if (inputNode.value) {
-            inputNode.classList.remove("red-border");
-        } else {
+        if (!inputNode.value) {
             inputNode.classList.add("red-border");
             isEmpty = true;
+        } else {
+            inputNode.classList.remove("red-border");
         }
     }
     return isEmpty;
 }
 export function validation(datas: UserPasswords): boolean {
-    // if (!areInputsEmpty(datas)) {
-    //     alert("Заполните все пустые поля!");
-    //     return false;
-    // } else if (!arePasswordsMatch(datas.password, datas.checkPassword)) {
-    //     alert("Пароли не совпадают!");
-    //     return false;
-    // } else if (datas.isPassConfirm == false) {
-    //     alert("Подтвердите пароль!");
-    //     return false;
-    // } else {
-    //     console.log(true);
-    //     return true;
-    // }
-    let isAccess = false;
 
+    let isAccess = false;
     if (
-        areInputsEmpty(datas) &&
+        !areInputsEmpty(datas) &&
         arePasswordsMatch(datas.password, datas.checkPassword) &&
-        datas.isPassConfirm == false
-    ){
-        isAccess = true
+        datas.isPassConfirm == true
+    ) {
+        isAccess = true;
+    } else {
+        if (areInputsEmpty(datas)) {
+            alert("Заполните все пустые поля!");
+            return false
+        };
+        if (!arePasswordsMatch(datas.password, datas.checkPassword)) {
+            alert("Пароли не совпадают!");
+            return false
+        }
+        if (datas.isPassConfirm == false) {
+            alert("Подтвердите пароль!");
+            return false
+        }
     }
-    if (!areInputsEmpty(datas)) {
-        alert("Заполните все пустые поля!");
-    }
-    if (!arePasswordsMatch(datas.password, datas.checkPassword)) {
-        alert("Пароли не совпадают!");
-    }
-    if (datas.isPassConfirm == false) {
-        alert("Подтвердите пароль!");
-    }
+    console.log(isAccess)
     return isAccess
 }
 
@@ -77,15 +61,26 @@ export function arePasswordsMatch(
         "regcheckPassword"
     ) as HTMLInputElement;
 
-    if (password === checkPassword) {
-        pass.classList.remove("red-border");
-        checkPass.classList.remove("red-border");
-        return true;
-    } else {
+    // if (password === checkPassword) {
+    //     pass.classList.remove("red-border");
+    //     checkPass.classList.remove("red-border");
+    //     return true;
+    // } else {
+    //     pass.value = "";
+    //     checkPass.value = "";
+    //     pass.classList.add("red-border");
+    //     checkPass.classList.add("red-border");
+    //     return false;
+    // }
+
+    if (password != checkPassword) {
         pass.value = "";
         checkPass.value = "";
         pass.classList.add("red-border");
         checkPass.classList.add("red-border");
         return false;
     }
+    pass.classList.remove("red-border");
+    checkPass.classList.remove("red-border");
+    return true;
 }

@@ -5,6 +5,7 @@ import "./index.scss";
 import { HashRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import { store } from "./store/store.ts";
+import './firebase.ts'
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
     <HashRouter>

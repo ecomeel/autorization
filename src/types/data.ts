@@ -18,4 +18,5 @@ export interface User {
     surname: string | null,
     phone: string | null,
     email: string | null,
+    // accessToken : accessToken
 }
