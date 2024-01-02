@@ -1,30 +1,31 @@
 import React, { useState } from "react";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { useDispatch } from "react-redux";
-import { useAsyncValue, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-import Input from "../Input/Input";
-import Button from "../Button/Button";
+import Input from "../Input/Input.tsx";
+import Button from "../Button/Button.tsx";
 
-import { getUserFromDatabase } from "../../firebase";
+import { getUserFromDatabase } from "../../firebase.ts";
 import { loginUser } from "../../store/slices/userSlice";
 
 import "./login-form.scss";
 
-export default function LoginForm() {
+const LoginForm: React.FC = () => {
     const [user, setUser] = useState({
         email: "",
         password: "",
     });
+
     const dispatch = useDispatch();
-    const navigate = useNavigate()
+    const navigate = useNavigate();
 
     function areInputsFilled() {
         let noError = true;
         for (let param in user) {
             if (param == "isPassConfirm") continue;
 
-            const input = document.getElementById(param);
+            const input = document.getElementById(param) as HTMLInputElement;
 
             if (input.value === "") {
                 input.classList.add("red-border");
@@ -36,7 +37,7 @@ export default function LoginForm() {
         return noError;
     }
 
-    function validation() {
+    function validation(): boolean {
         if (!areInputsFilled()) {
             alert("Заполните пустые поля");
             return false;
@@ -45,12 +46,7 @@ export default function LoginForm() {
         return true;
     }
 
-    function handleInputChange(e) {
-        setUser({
-            ...user,
-            [e.target.name]: e.target.value,
-        });
-    }
+
 
     function handleSignIn() {
         if (!validation()) return;
@@ -60,26 +56,32 @@ export default function LoginForm() {
             .then((userCredential) => {
                 const person = userCredential.user;
 
-                getUserFromDatabase(person.uid).then(data => {
-                    dispatch(loginUser({
-                        name: data.name,
-                        surname: data.surname,
-                        id: person.uid,
-                        email: data.email,
-                        token: person.accessToken,
-                        phone: data.phone
-                    }));
+                getUserFromDatabase(person.uid).then((data: any) => {
+                    dispatch(
+                        loginUser({
+                            name: data.name,
+                            surname: data.surname,
+                            id: person.uid,
+                            email: data.email,
+                            // token: person.accessToken,
+                            phone: data.phone,
+                        })
+                    );
 
-                    navigate('/')
+                    navigate("/");
                 });
-
-
-
             })
-            .catch((error) => {
-                const errorCode = error.code;
-                const errorMessage = error.message;
-            });
+            // .catch((error: any)) => {
+                // const errorCode = error.code;
+                // const errorMessage = error.message;
+            // });
+    }
+
+    const handleInputChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
+        setUser({
+            ...user,
+            [e.target.name] : e.target.value,
+        });
     }
 
     return (
@@ -98,7 +100,9 @@ export default function LoginForm() {
                 value={user.password}
                 onChange={handleInputChange}
             />
-            <Button text="Войти" handleBtnClick={handleSignIn} />
+            <Button text="Войти" handlebtnClick={handleSignIn} />
         </div>
     );
-}
+};
+
+export default LoginForm;

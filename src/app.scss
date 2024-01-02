@@ -1,0 +1,18 @@
+.container {
+    margin: 0 auto;
+    padding-top: 70px;
+    padding-bottom: 70px;
+    padding: 70px 20px;
+    position: relative;
+    width: 800px;
+}
+
+.active {
+    display: block !important;
+}
+
+@media (max-width: 830px) {
+    .container {
+        width: 100%;
+    }
+}

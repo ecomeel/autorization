@@ -1,10 +1,19 @@
-import React from "react";
 import { Link } from "react-router-dom";
 
 import arrowImg from "../../assets/arrow.png";
 import "./another-login-type.scss";
 
-export default function AnotherLoginType({ title, description, path }) {
+interface ItfAnotherLoginType {
+    title: string;
+    description: string;
+    path: string;
+}
+
+const AnotherLoginType = ({
+    title,
+    description,
+    path,
+}: ItfAnotherLoginType) => {
     return (
         <div className="toLogin">
             <p className="toLogin__text">{title}</p>
@@ -13,4 +22,6 @@ export default function AnotherLoginType({ title, description, path }) {
             </Link>
         </div>
     );
-}
+};
+
+export default AnotherLoginType;

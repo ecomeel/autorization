@@ -13,7 +13,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-export async function addUserToDatabase(user) {
+export async function addUserToDatabase(user: any) {
     try {
         await setDoc(doc(db, "users", user.id), {
             name: user.name,
@@ -26,7 +26,7 @@ export async function addUserToDatabase(user) {
     }
 }
 
-export async function getUserFromDatabase(uid) {
+export async function getUserFromDatabase(uid: any) {
     const docRef = doc(db, "users", uid);
     const docSnap = await getDoc(docRef);
 

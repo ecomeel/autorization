@@ -1,14 +1,14 @@
 import React from "react";
 
 import Header from "../components/Header/Header";
-import LoginForm from "../components/Login-form/LoginForm";
-import AnotherLoginType from "../components/AnotherLoginType/AnotherLoginType";
+import LoginForm from "../components/Login-form/LoginForm.tsx";
+import AnotherLoginType from "../components/AnotherLoginType/AnotherLoginType.tsx";
 
-export default function LoginPage() {
+const LoginPage: React.FC = () => {
     return (
         <div>
             <Header
-                title="Авторизация"
+                headerTitle="Авторизация"
                 description="Введите свои данные, чтобы войти а аккаунт"
             />
             <LoginForm />
@@ -21,3 +21,5 @@ export default function LoginPage() {
         </div>
     );
 }
+
+export default LoginPage

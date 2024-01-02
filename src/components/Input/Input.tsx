@@ -1,6 +1,14 @@
-import React from "react";
 import "./input.scss";
-export default function Input({ name, type, placeholder, value, onChange }) {
+
+interface ItfInputAttrs {
+    name: string;
+    type: string;
+    placeholder: string;
+    value: string | number;
+    onChange: any
+}
+
+const Input = ({ name, type, placeholder, value, onChange }: ItfInputAttrs) => {
     return (
         <>
             <input
@@ -15,3 +23,5 @@ export default function Input({ name, type, placeholder, value, onChange }) {
         </>
     );
 }
+
+export default Input

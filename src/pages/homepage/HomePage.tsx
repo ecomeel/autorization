@@ -1,14 +1,12 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
 import { Navigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
-import { useAuth } from "../../hooks/use-auth";
-import { logoutUser } from "../../store/slices/userSlice";
-import Button from "../../components/Button/Button";
+import { useAuth } from "../../hooks/use-auth.tsx";
+import { logoutUser } from "../../store/slices/userSlice.ts";
+import Button from "../../components/Button/Button.tsx";
 import "./homepage.scss";
 
-export default function HomePage() {
+const HomePage: React.FC = () => {
     const dispatch = useDispatch();
     const { isAuth, name, surname, phone, email } = useAuth();
     return isAuth ? (
@@ -19,10 +17,12 @@ export default function HomePage() {
             <p className="user__data">Твой номер телефона: {phone}</p>
             <Button
                 text="Выйти"
-                handleBtnClick={() => dispatch(logoutUser())}
+                handlebtnClick={() => dispatch(logoutUser())}
             />
         </div>
     ) : (
         <Navigate to='/registration' />
     );
 }
+
+export default HomePage
