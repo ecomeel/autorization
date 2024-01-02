@@ -1,0 +1,22 @@
+@import '../../vars';
+
+.toLogin {
+    margin-top: 32px;
+    display: flex;
+    align-items: center;
+    column-gap: 10px;
+
+    &__text {
+        color: $gray-color;
+    }
+    &__button {
+        display: flex;
+        align-items: center;
+        column-gap: 5px;
+        color: $blue-color;
+        cursor: pointer;
+    }
+    &__img {
+        width: 18px;
+    }
+}

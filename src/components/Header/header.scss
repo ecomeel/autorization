@@ -1,0 +1,13 @@
+@import "../../vars";
+
+.header {
+    &__title {
+        font-size: 32px;
+        font-weight: 700;
+    }
+    &__description {
+        margin-top: 13px;
+        font-size: 18px;
+        color: $gray-color;
+    }
+}

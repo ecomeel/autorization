@@ -1,0 +1,15 @@
+@import "../../vars";
+
+.button {
+    padding: 14px 52px;
+    margin-top: 50px !important;
+    background-color: $blue-color;
+    border: none;
+    border-radius: 4px;
+    color: #fff;
+    transition: all ease 0.5s;
+
+    &:hover {
+        background-color: rgba($color: #58619863, $alpha: 0.5);
+    }
+}

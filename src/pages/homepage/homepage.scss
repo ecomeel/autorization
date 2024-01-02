@@ -1,0 +1,20 @@
+.user {
+    padding: 25px;
+    border-radius: 30px;
+    border: 1px solid rgba(98, 98, 98, 0.78);
+    & > *:not(:last-child) {
+        margin-bottom: 25px;
+    }
+
+    &__title {
+        font-size: 25px;
+        font-weight: 700;
+    }
+    &__desc {
+        font-size: 22px;
+    }
+    &__data {
+        font-size: 20px;
+    }
+
+}
