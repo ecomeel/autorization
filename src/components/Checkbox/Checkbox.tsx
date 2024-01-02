@@ -1,8 +1,13 @@
-import React from "react";
+import "./checkbox.scss";
 
-import './checkbox.scss'
+interface ItfCheckbox {
+    name: string,
+    label: string,
+    isConfirm: boolean,
+    onChange: any
+}
 
-export default function Checkbox({ name, label, isConfirm, onChange }) {
+const Checkbox = ({ name, label, isConfirm, onChange }: ItfCheckbox) => {
     return (
         <div className="checkbox">
             <input
@@ -18,4 +23,6 @@ export default function Checkbox({ name, label, isConfirm, onChange }) {
             </label>
         </div>
     );
-}
+};
+
+export default Checkbox;

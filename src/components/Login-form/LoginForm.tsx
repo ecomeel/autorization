@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import Input from "../Input/Input.tsx";
 import Button from "../Button/Button.tsx";
 
-import { getUserFromDatabase } from "../../firebase.ts";
+import { getUserFromDatabase } from "../../firebase.js";
 import { loginUser } from "../../store/slices/userSlice";
 
 import "./login-form.scss";

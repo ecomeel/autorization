@@ -8,7 +8,7 @@ const LoginPage: React.FC = () => {
     return (
         <div>
             <Header
-                headerTitle="Авторизация"
+                title="Авторизация"
                 description="Введите свои данные, чтобы войти а аккаунт"
             />
             <LoginForm />

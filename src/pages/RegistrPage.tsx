@@ -4,7 +4,7 @@ import Header from "../components/Header/Header";
 import RegistrForm from "../components/Registr-Form/RegistrForm";
 import AnotherLoginType from "../components/AnotherLoginType/AnotherLoginType";
 
-export default function RegistrPage() {
+const RegistrPage: React.FC = () => {
     return (
         <div>
             <Header
@@ -20,3 +20,4 @@ export default function RegistrPage() {
         </div>
     );
 }
+export default RegistrPage

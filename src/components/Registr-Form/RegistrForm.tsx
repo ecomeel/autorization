@@ -11,7 +11,7 @@ import Checkbox from "../Checkbox/Checkbox";
 import Button from "../Button/Button";
 import "./registr-form.scss";
 
-export default function Form() {
+const Form: React.FC = () => {
     const [user, setUser] = useState({
         name: "",
         surname: "",
@@ -30,7 +30,7 @@ export default function Form() {
         for (let param in user) {
             if (param == "isPassConfirm") continue;
 
-            const input = document.getElementById(param);
+            const input = document.getElementById(param) as HTMLInputElement;
 
             if (input.value === "") {
                 input.classList.add("red-border");
@@ -43,20 +43,16 @@ export default function Form() {
     }
 
     function arePasswordsMatch() {
-        const pass = document.getElementById("password");
-        const checkPass = document.getElementById("checkPassword");
+        const pass = document.getElementById("password") as HTMLInputElement;
+        const checkPass = document.getElementById("checkPassword") as HTMLInputElement;;
 
         if (user.password === user.checkPassword) {
             pass.classList.remove("red-border");
             checkPass.classList.remove("red-border");
             return true;
         } else {
-            const pass = document.getElementById("password");
-            const checkPass = document.getElementById("checkPassword");
-
             pass.value = "";
             checkPass.value = "";
-
             pass.classList.add("red-border");
             checkPass.classList.add("red-border");
             return false;
@@ -98,7 +94,7 @@ export default function Form() {
                         name: user.name,
                         surname: user.surname,
                         email: user.email,
-                        token: person.accessToken,
+                        // token: person.accessToken,
                         phone: user.phone,
                     })
                 );
@@ -115,21 +111,21 @@ export default function Form() {
 
                 // ...
             })
-            .catch((error) => {
-                const errorCode = error.code;
-                const errorMessage = error.message;
-            });
+            // .catch((error) => {
+            //     const errorCode = error.code;
+            //     const errorMessage = error.message;
+            // });
 
     }
 
-    function handleInputChange(e) {
+    const handleInputChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
         setUser({
             ...user,
             [e.target.name]: e.target.value,
         });
     }
 
-    function handleCheckboxChange(e) {
+    const handleCheckboxChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
         setUser({
             ...user,
             isPassConfirm: e.target.checked,
@@ -195,3 +191,5 @@ export default function Form() {
         </div>
     );
 }
+
+export default Form

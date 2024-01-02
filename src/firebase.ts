@@ -13,7 +13,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-export async function addUserToDatabase(user: any) {
+export const addUserToDatabase = async (user: any) => {
     try {
         await setDoc(doc(db, "users", user.id), {
             name: user.name,
@@ -24,9 +24,9 @@ export async function addUserToDatabase(user: any) {
     } catch (e) {
         console.error("Error adding user: ", e);
     }
-}
+};
 
-export async function getUserFromDatabase(uid: any) {
+export const getUserFromDatabase = async (uid: string) => {
     const docRef = doc(db, "users", uid);
     const docSnap = await getDoc(docRef);
 
@@ -40,4 +40,40 @@ export async function getUserFromDatabase(uid: any) {
     } else {
         console.log("No such user");
     }
-}
+};
+
+// export const createUser = async () => {
+//     createUserWithEmailAndPassword(auth, user.email, user.password).then(
+//         (userCredential) => {
+//             // Signed up
+//             const person = userCredential.user;
+
+//             dispatch(
+//                 loginUser({
+//                     id: person.uid,
+//                     name: user.name,
+//                     surname: user.surname,
+//                     email: user.email,
+//                     // token: person.accessToken,
+//                     phone: user.phone,
+//                 })
+//             );
+
+//             addUserToDatabase({
+//                 id: person.uid,
+//                 name: user.name,
+//                 surname: user.surname,
+//                 email: user.email,
+//                 phone: user.phone,
+//             });
+
+//             navigate("/");
+
+//             // ...
+//         }
+//     );
+//     // .catch((error) => {
+//     //     const errorCode = error.code;
+//     //     const errorMessage = error.message;
+//     // });
+// };
