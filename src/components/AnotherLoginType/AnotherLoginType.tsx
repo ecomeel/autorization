@@ -1,19 +1,18 @@
 import { Link } from "react-router-dom";
 
+import { IHeader } from "../../types/data";
 import arrowImg from "../../assets/arrow.png";
 import "./another-login-type.scss";
 
-interface ItfAnotherLoginType {
-    title: string;
-    description: string;
-    path: string;
+interface IPathHeader extends IHeader {
+    path: string
 }
 
 const AnotherLoginType = ({
     title,
     description,
     path,
-}: ItfAnotherLoginType) => {
+}: IPathHeader) => {
     return (
         <div className="toLogin">
             <p className="toLogin__text">{title}</p>

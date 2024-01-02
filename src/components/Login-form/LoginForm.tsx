@@ -3,57 +3,27 @@ import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-import Input from "../Input/Input.tsx";
-import Button from "../Button/Button.tsx";
-
 import { getUserFromDatabase } from "../../firebase.js";
 import { loginUser } from "../../store/slices/userSlice";
 
-import "./login-form.scss";
+import { areInputsEmpty } from "../../hooks/useValidation.js";
 
-const LoginForm: React.FC = () => {
+import '../form-styles/form.scss'
+
+export const LoginForm: React.FC = () => {
     const [user, setUser] = useState({
         email: "",
         password: "",
     });
-
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    function areInputsFilled() {
-        let noError = true;
-        for (let param in user) {
-            if (param == "isPassConfirm") continue;
-
-            const input = document.getElementById(param) as HTMLInputElement;
-
-            if (input.value === "") {
-                input.classList.add("red-border");
-                noError = false;
-            } else {
-                input.classList.remove("red-border");
-            }
-        }
-        return noError;
-    }
-
-    function validation(): boolean {
-        if (!areInputsFilled()) {
-            alert("Заполните пустые поля");
-            return false;
-        }
-
-        return true;
-    }
-
-
-
     function handleSignIn() {
-        if (!validation()) return;
+        if (areInputsEmpty(user)) return;
 
         const auth = getAuth();
-        signInWithEmailAndPassword(auth, user.email, user.password)
-            .then((userCredential) => {
+        signInWithEmailAndPassword(auth, user.email, user.password).then(
+            (userCredential) => {
                 const person = userCredential.user;
 
                 getUserFromDatabase(person.uid).then((data: any) => {
@@ -63,46 +33,47 @@ const LoginForm: React.FC = () => {
                             surname: data.surname,
                             id: person.uid,
                             email: data.email,
-                            // token: person.accessToken,
                             phone: data.phone,
                         })
                     );
 
                     navigate("/");
                 });
-            })
-            // .catch((error: any)) => {
-                // const errorCode = error.code;
-                // const errorMessage = error.message;
-            // });
+            }
+        )
+        .catch((error) => console.log(error.code, error.message));
     }
 
-    const handleInputChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
+    const handleInputChange: React.ChangeEventHandler<HTMLInputElement> = (
+        e
+    ) => {
         setUser({
             ...user,
-            [e.target.name] : e.target.value,
+            [e.target.name]: e.target.value,
         });
-    }
+    };
 
     return (
         <div className="form">
-            <Input
+            <input
                 name="email"
                 type="email"
                 placeholder="Email"
+                className="form__input"
                 value={user.email}
                 onChange={handleInputChange}
             />
-            <Input
+            <input
                 name="password"
                 type="password"
                 placeholder="Password"
+                className="form__input"
                 value={user.password}
                 onChange={handleInputChange}
             />
-            <Button text="Войти" handlebtnClick={handleSignIn} />
+            <button className="button" name="save-data" onClick={handleSignIn}>
+                Войти
+            </button>
         </div>
     );
 };
-
-export default LoginForm;

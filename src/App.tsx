@@ -1,8 +1,8 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 
-import HomePage from "./pages/homepage/HomePage.tsx";
-import LoginPage from "./pages/LoginPage.tsx";
+import { HomePage } from "./pages/homepage/HomePage.tsx";
+import { LoginPage } from "./pages/LoginPage.tsx";
 import { RegistrPage } from "./pages/RegistrPage.tsx";
 
 import "./app.scss";

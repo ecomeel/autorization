@@ -1,11 +1,14 @@
-import { User } from "../types/data";
-interface UserPasswords extends User {
-    password: string;
-    checkPassword: string;
-    isPassConfirm: boolean;
+import { IUser } from "../types/data";
+
+interface IUserPasswords extends IUser {
+    password?: string;
+    checkPassword?: string;
+    isPassConfirm?: boolean;
+    email?: string;
+
 }
 
-export function areInputsEmpty(fields: UserPasswords): boolean {
+export function areInputsEmpty(fields: IUserPasswords): boolean {
     let isEmpty = false;
 
     for (let field in fields) {
@@ -25,12 +28,13 @@ export function areInputsEmpty(fields: UserPasswords): boolean {
     }
     return isEmpty;
 }
-export function validation(datas: UserPasswords): boolean {
+
+export function validation(datas: IUserPasswords): boolean {
 
     let isAccess = false;
     if (
         !areInputsEmpty(datas) &&
-        arePasswordsMatch(datas.password, datas.checkPassword) &&
+        arePasswordsMatch(datas.password!, datas.checkPassword!) &&
         datas.isPassConfirm == true
     ) {
         isAccess = true;
@@ -39,7 +43,7 @@ export function validation(datas: UserPasswords): boolean {
             alert("Заполните все пустые поля!");
             return false
         };
-        if (!arePasswordsMatch(datas.password, datas.checkPassword)) {
+        if (!arePasswordsMatch(datas.password!, datas.checkPassword!)) {
             alert("Пароли не совпадают!");
             return false
         }
@@ -48,7 +52,6 @@ export function validation(datas: UserPasswords): boolean {
             return false
         }
     }
-    console.log(isAccess)
     return isAccess
 }
 
@@ -60,18 +63,6 @@ export function arePasswordsMatch(
     const checkPass = document.getElementById(
         "regcheckPassword"
     ) as HTMLInputElement;
-
-    // if (password === checkPassword) {
-    //     pass.classList.remove("red-border");
-    //     checkPass.classList.remove("red-border");
-    //     return true;
-    // } else {
-    //     pass.value = "";
-    //     checkPass.value = "";
-    //     pass.classList.add("red-border");
-    //     checkPass.classList.add("red-border");
-    //     return false;
-    // }
 
     if (password != checkPassword) {
         pass.value = "";

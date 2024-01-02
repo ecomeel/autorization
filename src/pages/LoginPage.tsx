@@ -1,10 +1,10 @@
 import React from "react";
 
 import Header from "../components/Header/Header";
-import LoginForm from "../components/Login-form/LoginForm.tsx";
+import { LoginForm } from "../components/Login-form/LoginForm.tsx";
 import AnotherLoginType from "../components/AnotherLoginType/AnotherLoginType.tsx";
 
-const LoginPage: React.FC = () => {
+export const LoginPage: React.FC = () => {
     return (
         <div>
             <Header
@@ -20,6 +20,4 @@ const LoginPage: React.FC = () => {
             />
         </div>
     );
-}
-
-export default LoginPage
+};

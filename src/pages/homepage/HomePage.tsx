@@ -3,10 +3,9 @@ import { useDispatch } from "react-redux";
 
 import { useAuth } from "../../hooks/use-auth.ts";
 import { logoutUser } from "../../store/slices/userSlice.ts";
-import Button from "../../components/Button/Button.tsx";
 import "./homepage.scss";
 
-const HomePage: React.FC = () => {
+export const HomePage: React.FC = () => {
     const dispatch = useDispatch();
     const { isAuth, name, surname, phone, email } = useAuth();
     return isAuth ? (
@@ -15,14 +14,12 @@ const HomePage: React.FC = () => {
             <p className="user__desc">Ты успешно зашел в свой аккаунт 🙂</p>
             <p className="user__data">Твой email: {email}</p>
             <p className="user__data">Твой номер телефона: {phone}</p>
-            <Button
-                text="Выйти"
-                handlebtnClick={() => dispatch(logoutUser())}
-            />
+            <button onClick={() => dispatch(logoutUser())}>
+                Выйти
+            </button>
         </div>
     ) : (
         <Navigate to='/registration' />
     );
 }
 
-export default HomePage

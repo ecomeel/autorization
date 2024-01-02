@@ -7,10 +7,7 @@ import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { addUserToDatabase } from "../../firebase";
 import { loginUser } from "../../store/slices/userSlice";
 
-import "../Input/input.scss";
-import "../Checkbox/checkbox.scss";
-import "../Button/button.scss";
-import "./registr-form.scss";
+import '../form-styles/form.scss'
 
 import { validation } from "../../hooks/useValidation.ts";
 
@@ -27,13 +24,12 @@ export const RegistrForm: React.FC = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    function handleSignUpClick() {
+    function handleSignUpClick(): void {
         if (!validation(user)) return;
 
         const auth = getAuth();
         createUserWithEmailAndPassword(auth, user.email, user.password).then(
             (userCredential) => {
-                // Signed up
                 const person = userCredential.user;
 
                 dispatch(
@@ -56,11 +52,7 @@ export const RegistrForm: React.FC = () => {
 
                 navigate("/");
             }
-        )
-        // .catch((error) => {
-        //     const errorCode = error.code;
-        //     const errorMessage = error.message;
-        // });
+        ).catch((error) => console.log(error.code, error.message))
     }
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -69,7 +61,7 @@ export const RegistrForm: React.FC = () => {
             [e.target.name]: e.target.value,
         });
     };
-    function handleConfirm() {
+    function handleConfirm(): void {
         setUser({
             ...user,
             isPassConfirm: !user.isPassConfirm,

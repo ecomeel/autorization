@@ -1,12 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import { User } from "../../types/data";
+import { IUser } from "../../types/data";
 
-interface CurrentUser extends User {
+interface ICurrentUser extends IUser {
     id?: string | number,
 }
 
-const initialState:CurrentUser = {
+const initialState: ICurrentUser = {
     name: null,
     surname: null,
     phone: null,
@@ -17,7 +17,7 @@ const userSlice = createSlice({
     name: "user",
     initialState,
     reducers: {
-        loginUser(state, action: PayloadAction<CurrentUser>) {
+        loginUser(state, action: PayloadAction<ICurrentUser>) {
             state.id = action.payload.id;
             state.name = action.payload.name;
             state.surname = action.payload.surname;
