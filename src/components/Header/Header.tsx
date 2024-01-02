@@ -1,11 +1,11 @@
 import './header.scss';
 
-interface IntHeaderText {
+interface ItfHeaderText {
     title: string,
     description: string
 }
 
-const Header = ({title, description}: IntHeaderText) => { // ??
+const Header = ({title, description}: ItfHeaderText) => {
     return (
         <header className="header">
             <h1 className="header__title">{title}</h1>

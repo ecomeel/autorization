@@ -1,10 +1,10 @@
 import React from "react";
 
 import Header from "../components/Header/Header";
-import RegistrForm from "../components/Registr-Form/RegistrForm";
+import { RegistrForm } from "../components/Registr-Form/RegistrForm";
 import AnotherLoginType from "../components/AnotherLoginType/AnotherLoginType";
 
-const RegistrPage: React.FC = () => {
+export const RegistrPage: React.FC = () => {
     return (
         <div>
             <Header
@@ -19,5 +19,4 @@ const RegistrPage: React.FC = () => {
             />
         </div>
     );
-}
-export default RegistrPage
+};

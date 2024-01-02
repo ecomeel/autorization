@@ -41,39 +41,3 @@ export const getUserFromDatabase = async (uid: string) => {
         console.log("No such user");
     }
 };
-
-// export const createUser = async () => {
-//     createUserWithEmailAndPassword(auth, user.email, user.password).then(
-//         (userCredential) => {
-//             // Signed up
-//             const person = userCredential.user;
-
-//             dispatch(
-//                 loginUser({
-//                     id: person.uid,
-//                     name: user.name,
-//                     surname: user.surname,
-//                     email: user.email,
-//                     // token: person.accessToken,
-//                     phone: user.phone,
-//                 })
-//             );
-
-//             addUserToDatabase({
-//                 id: person.uid,
-//                 name: user.name,
-//                 surname: user.surname,
-//                 email: user.email,
-//                 phone: user.phone,
-//             });
-
-//             navigate("/");
-
-//             // ...
-//         }
-//     );
-//     // .catch((error) => {
-//     //     const errorCode = error.code;
-//     //     const errorMessage = error.message;
-//     // });
-// };

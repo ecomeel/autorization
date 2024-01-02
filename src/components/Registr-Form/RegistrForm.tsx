@@ -6,12 +6,16 @@ import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 
 import { addUserToDatabase } from "../../firebase";
 import { loginUser } from "../../store/slices/userSlice";
-import Input from "../Input/Input";
-import Checkbox from "../Checkbox/Checkbox";
-import Button from "../Button/Button";
+
+import "../Input/input.scss";
+import "../Checkbox/checkbox.scss";
+import "../Button/button.scss";
 import "./registr-form.scss";
 
-const Form: React.FC = () => {
+import { validation } from "../../hooks/useValidation.ts";
+// import Checkbox from "../Checkbox/Checkbox.tsx";
+
+export const RegistrForm: React.FC = () => {
     const [user, setUser] = useState({
         name: "",
         surname: "",
@@ -21,175 +25,137 @@ const Form: React.FC = () => {
         checkPassword: "",
         isPassConfirm: false,
     });
-    const auth = getAuth();
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    function areInputsFilled() {
-        let noError = true;
-        for (let param in user) {
-            if (param == "isPassConfirm") continue;
-
-            const input = document.getElementById(param) as HTMLInputElement;
-
-            if (input.value === "") {
-                input.classList.add("red-border");
-                noError = false;
-            } else {
-                input.classList.remove("red-border");
-            }
-        }
-        return noError;
-    }
-
-    function arePasswordsMatch() {
-        const pass = document.getElementById("password") as HTMLInputElement;
-        const checkPass = document.getElementById("checkPassword") as HTMLInputElement;;
-
-        if (user.password === user.checkPassword) {
-            pass.classList.remove("red-border");
-            checkPass.classList.remove("red-border");
-            return true;
+    const handleSignUpClick = () => {
+        if (!validation(user)) {
+            console.log("Проверка пройдена");
         } else {
-            pass.value = "";
-            checkPass.value = "";
-            pass.classList.add("red-border");
-            checkPass.classList.add("red-border");
-            return false;
-        }
-    }
-
-    function validation() {
-        if (!areInputsFilled()) {
-            alert("Заполните пустые поля");
-            return false;
+            console.log("Провал");
         }
 
-        if (!arePasswordsMatch()) {
-            alert("Пароли не совпадают");
-            return false;
-        }
+        // createUserWithEmailAndPassword(auth, user.email, user.password).then(
+        //     (userCredential) => {
+        //         const auth = getAuth();
 
-        if (!user.isPassConfirm) {
-            alert("Подтвердите пароль");
-            return false;
-        }
+        //         // Signed up
+        //         const person = userCredential.user;
+        //         // console.log(person)
+        //         // console.log(person.accessToken)
+        //         // dispatch(
+        //         //     loginUser({
+        //         //         id: person.uid,
+        //         //         name: user.name,
+        //         //         surname: user.surname,
+        //         //         email: user.email,
+        //         //         // token: person.accessToken,
+        //         //         phone: user.phone,
+        //         //     })
+        //         // );
 
-        return true;
-    }
+        //         // addUserToDatabase({
+        //         //     id: person.uid,
+        //         //     name: user.name,
+        //         //     surname: user.surname,
+        //         //     email: user.email,
+        //         //     phone: user.phone,
+        //         // });
 
-    function handleSignUp() {
-        if (!validation()) {
-            return;
-        }
+        //         navigate("/");
+        //     }
+        // );
+        // .catch((error) => {
+        //     const errorCode = error.code;
+        //     const errorMessage = error.message;
+        // });
+    };
 
-        createUserWithEmailAndPassword(auth, user.email, user.password)
-            .then((userCredential) => {
-                // Signed up
-                const person = userCredential.user;
-
-                dispatch(
-                    loginUser({
-                        id: person.uid,
-                        name: user.name,
-                        surname: user.surname,
-                        email: user.email,
-                        // token: person.accessToken,
-                        phone: user.phone,
-                    })
-                );
-
-                addUserToDatabase({
-                    id: person.uid,
-                    name: user.name,
-                    surname: user.surname,
-                    email: user.email,
-                    phone: user.phone,
-                });
-
-                navigate("/");
-
-                // ...
-            })
-            // .catch((error) => {
-            //     const errorCode = error.code;
-            //     const errorMessage = error.message;
-            // });
-
-    }
-
-    const handleInputChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setUser({
             ...user,
             [e.target.name]: e.target.value,
         });
-    }
+    };
 
-    const handleCheckboxChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
-        setUser({
-            ...user,
-            isPassConfirm: e.target.checked,
-        });
-    }
+    // Почему не переключается чекбокс
 
     return (
         <div className="form">
-            <Input
-                name="name"
+            <input
                 type="text"
+                id="regname"
+                className="form__input"
+                name="name"
                 placeholder="Имя"
-                value={user.name}
                 onChange={handleInputChange}
+                value={user.name}
             />
-
-            <Input
+            <input
                 name="surname"
                 type="text"
+                id="regsurname"
+                className="form__input"
                 placeholder="Фамилия"
                 value={user.surname}
                 onChange={handleInputChange}
             />
-            <Input
+            <input
+                id="regphone"
+                className="form__input"
                 name="phone"
                 type="tel"
                 placeholder="Номер телефона"
                 value={user.phone}
                 onChange={handleInputChange}
             />
-            <Input
+            <input
+                id="regemail"
+                className="form__input"
                 name="email"
                 type="email"
                 placeholder="Email"
                 value={user.email}
                 onChange={handleInputChange}
             />
-            <Input
+            <input
+                id="regpassword"
+                className="form__input"
                 name="password"
                 type="password"
                 placeholder="Пароль"
                 value={user.password}
                 onChange={handleInputChange}
             />
-            <Input
+            <input
+                id="regcheckPassword"
+                className="form__input"
                 name="checkPassword"
                 type="password"
                 placeholder="Повторите пароль"
                 value={user.checkPassword}
                 onChange={handleInputChange}
             />
-            <Checkbox
-                name="pass-confirmation"
-                label="Подтверждаю пароль"
-                isConfirm={user.isPassConfirm}
-                onChange={handleCheckboxChange}
-            />
-            <Button
+            <div className="checkbox">
+                <input
+                    id="regisPassConfirm"
+                    className="checkbox__input"
+                    type="checkbox"
+                    name="isPassConfirm"
+                    // onClick={handleCheckboxChange}
+                    // checked={user.isPassConfirm}
+                />
+                <label htmlFor="regisPassConfirm" className="checkbox__label">
+                    Подтверждаю пароль
+                </label>
+            </div>
+            <button
+                className="button"
                 name="save-data"
-                text="Продолжить"
-                handleBtnClick={handleSignUp}
-            />
+                onClick={handleSignUpClick}
+            >
+                Продолжить
+            </button>
         </div>
     );
-}
-
-export default Form
+};

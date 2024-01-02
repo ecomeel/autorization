@@ -3,7 +3,7 @@ import { Routes, Route } from "react-router-dom";
 
 import HomePage from "./pages/homepage/HomePage.tsx";
 import LoginPage from "./pages/LoginPage.tsx";
-import RegistrPage from "./pages/RegistrPage.tsx";
+import { RegistrPage } from "./pages/RegistrPage.tsx";
 
 import "./app.scss";
 
@@ -17,6 +17,6 @@ const App: React.FC = () => {
             </Routes>
         </div>
     );
-}
+};
 
 export default App;

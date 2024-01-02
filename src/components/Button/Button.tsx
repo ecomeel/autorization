@@ -1,13 +1,14 @@
 import "./button.scss";
 
 interface ItfButton {
+    name: string,
     text: string;
     handlebtnClick: () => void;
 }
 
-const Button = ({ text, handlebtnClick }: ItfButton) => {
+const Button = ({ name, text, handleBtnClick }: ItfButton) => {
     return (
-        <button onClick={handlebtnClick} className="button">
+        <button name={name} onClick={handleBtnClick} className="button">
             {text}
         </button>
     );

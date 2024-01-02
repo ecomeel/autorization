@@ -1,7 +1,7 @@
 import { Navigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
-import { useAuth } from "../../hooks/use-auth.tsx";
+import { useAuth } from "../../hooks/use-auth.ts";
 import { logoutUser } from "../../store/slices/userSlice.ts";
 import Button from "../../components/Button/Button.tsx";
 import "./homepage.scss";
