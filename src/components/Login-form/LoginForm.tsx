@@ -8,7 +8,7 @@ import { loginUser } from "../../store/slices/userSlice";
 
 import { areInputsEmpty } from "../../hooks/useValidation.js";
 
-import '../form-styles/form.scss'
+import "../form-styles/form.scss";
 
 export const LoginForm: React.FC = () => {
     const [user, setUser] = useState({
@@ -19,11 +19,11 @@ export const LoginForm: React.FC = () => {
     const navigate = useNavigate();
 
     function handleSignIn() {
-        if (areInputsEmpty(user)) return;
+        if (areInputsEmpty()) return;
 
         const auth = getAuth();
-        signInWithEmailAndPassword(auth, user.email, user.password).then(
-            (userCredential) => {
+        signInWithEmailAndPassword(auth, user.email, user.password)
+            .then((userCredential) => {
                 const person = userCredential.user;
 
                 getUserFromDatabase(person.uid).then((data: any) => {
@@ -37,11 +37,15 @@ export const LoginForm: React.FC = () => {
                         })
                     );
 
+                    setUser({
+                        ...user,
+                        email: "",
+                        password: "",
+                    });
                     navigate("/");
                 });
-            }
-        )
-        .catch((error) => console.log(error.code, error.message));
+            })
+            .catch((error) => console.log(error.code, error.message));
     }
 
     const handleInputChange: React.ChangeEventHandler<HTMLInputElement> = (

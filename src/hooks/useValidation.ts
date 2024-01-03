@@ -5,54 +5,49 @@ interface IUserPasswords extends IUser {
     checkPassword?: string;
     isPassConfirm?: boolean;
     email?: string;
-
 }
 
-export function areInputsEmpty(fields: IUserPasswords): boolean {
+export function areInputsEmpty(): boolean {
     let isEmpty = false;
+    const inputNodes = document.querySelectorAll(
+        ".form__input"
+    ) as NodeListOf<HTMLInputElement>;
+    inputNodes.forEach((inputNode: HTMLInputElement): void => {
+        if (inputNode.type == 'checkbox') return 
 
-    for (let field in fields) {
-        if (field == "isPassConfirm") {
-            continue;
-        }
-
-        const inputNode = document.getElementById(
-            `reg${field}`
-        ) as HTMLInputElement;
         if (!inputNode.value) {
-            inputNode.classList.add("red-border");
-            isEmpty = true;
+            inputNode.classList.add('red-border');
+            isEmpty = true
         } else {
-            inputNode.classList.remove("red-border");
+            inputNode.classList.remove('red-border')
         }
-    }
-    return isEmpty;
+    })
+    return isEmpty
 }
 
 export function validation(datas: IUserPasswords): boolean {
-
     let isAccess = false;
     if (
-        !areInputsEmpty(datas) &&
+        !areInputsEmpty() &&
         arePasswordsMatch(datas.password!, datas.checkPassword!) &&
         datas.isPassConfirm == true
     ) {
         isAccess = true;
     } else {
-        if (areInputsEmpty(datas)) {
+        if (areInputsEmpty()) {
             alert("Заполните все пустые поля!");
-            return false
-        };
+            return false;
+        }
         if (!arePasswordsMatch(datas.password!, datas.checkPassword!)) {
             alert("Пароли не совпадают!");
-            return false
+            return false;
         }
         if (datas.isPassConfirm == false) {
             alert("Подтвердите пароль!");
-            return false
+            return false;
         }
     }
-    return isAccess
+    return isAccess;
 }
 
 export function arePasswordsMatch(
