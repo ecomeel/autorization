@@ -10,16 +10,17 @@ export const HomePage: React.FC = () => {
     const { isAuth, name, surname, phone, email } = useAuth();
     return isAuth ? (
         <div className="user">
-            <h2 className="user__title">Привет, {name} {surname}!</h2>
+            <h2 className="user__title">
+                Привет, {name} {surname}!
+            </h2>
             <p className="user__desc">Ты успешно зашел в свой аккаунт 🙂</p>
             <p className="user__data">Твой email: {email}</p>
             <p className="user__data">Твой номер телефона: {phone}</p>
-            <button onClick={() => dispatch(logoutUser())}>
+            <button className="button" onClick={() => dispatch(logoutUser())}>
                 Выйти
             </button>
         </div>
     ) : (
-        <Navigate to='/registration' />
+        <Navigate to="/registration" />
     );
-}
-
+};
